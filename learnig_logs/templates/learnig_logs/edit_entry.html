@@ -1,0 +1,18 @@
+{% extends "learnig_logs/base.html" %}
+
+{% block page_header %}
+
+	<h2><p><a href = "{% url 'learnig_logs:topic' topic.id %}"> {{topic	}} </a>  </p></h2>
+
+{% endblock page_header %}
+
+{% block content %}
+	<p> Edit Entry: </p>
+	
+	<form action="{% url 'learnig_logs:edit_entry' entry.id %}" method = 'post' >
+	{% csrf_token %}
+	{{form.as_p}}
+	<button name = "submit"> Save Changes </button>
+	
+	</form>
+{% endblock content %}
