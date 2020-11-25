@@ -50,17 +50,18 @@ def new_topic (request):
 def new_entry(request,topic_id):
 	#to add an entry to a specific topic
 	topic = Topic.objects.get(id=topic_id)
-	if request != 'POST':
+	if request == 'GET':
 		form = EntryForm()
 	else:
 		form = EntryForm(data=request.POST)
-		if form.is_valid :
-			new_entry = form.save(commit=false)
+		if form.is_valid():
+			new_entry = form.save(commit=False)
 			new_entry.topic = topic
 			new_entry.save()
-			return redirect('learnig_logs:topic',topic_id = topic_id )
-	
-	context = {'form':form,'topic':topic}
+			return redirect('learnig_logs:topic', topic_id = topic_id)
+		else:
+			print (form.errors)
+	context = {'topic':topic , 'form':form}
 	return render (request, 'learnig_logs/new_entry.html', context)
 	
 	
@@ -73,10 +74,10 @@ def edit_entry(request, entry_id):
 	if topic.owner != request.user:
 		raise Http404
 		
-	if request != 'POST':
+	if request.method != 'POST':
 		form = EntryForm(instance = entry)
 	else :
-		form = EntrytyForm(instance = entry,data = request.POST)
+		form = EntryForm(instance = entry,data = request.POST)
 		if form.is_valid():
 			form.save()
 			return redirect ('learnig_logs:topic', topic_id = topic.id)

@@ -9,10 +9,10 @@
 {% block content %}
 	<p> Edit Entry: </p>
 	
-	<form action="{% url 'learnig_logs:edit_entry' entry.id %}" method = 'post' >
+	<form action="{% url 'learnig_logs:edit_entry' entry.id %}" method = 'post'>
 	{% csrf_token %}
 	{{form.as_p}}
-	<button name = "submit"> Save Changes </button>
-	
+	<!-- <button name = "submit"> Save Changes </button> -->
+	<input class="btn btn-primary" type="submit" value="Save Changes">
 	</form>
 {% endblock content %}
